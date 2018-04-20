@@ -1,7 +1,6 @@
 'use strict';
 var DataTypes = require('sequelize/lib/data-types');
 
-
 module.exports = (sequelize, DataTypes) => {
   var Author = sequelize.define('Author', {
     firstName: { type: DataTypes.STRING, required: true },
@@ -10,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Author.associate = function(models) {
     // associations can be defined here
-    Author.hasMany(models.Blog)
+    Author.hasMany(models.Blog, {
+      as: "blogs",
+      foreignKey: "authorId",
+      sourceKey: "id"
+    })
   };
   return Author;
 };
